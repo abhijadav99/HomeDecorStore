@@ -11,34 +11,34 @@ namespace HomeDecorStore
 {
 
 
-    public partial class SiteMaster
+    public partial class Products
     {
 
         /// <summary>
-        /// head control.
+        /// ddlCategories control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCategories;
 
         /// <summary>
-        /// adminLink control.
+        /// ltMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder adminLink;
+        protected global::System.Web.UI.WebControls.Literal ltMessage;
 
         /// <summary>
-        /// MainContent control.
+        /// rptProducts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Repeater rptProducts;
     }
 }

@@ -6,14 +6,19 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
-
+     <title>Home Decor Store</title>
+     <asp:ContentPlaceHolder ID="head" runat="server">
+     </asp:ContentPlaceHolder>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+       <link href="~/Styles/main.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
 
 </head>
 <body>
@@ -37,31 +42,79 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Application name</a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="<%= GetRouteUrl("HomeRoute", null) %>">HomeDecor</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contact</a></li>
-                    </ul>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="<%= GetRouteUrl("HomeRoute", null) %>">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%= GetRouteUrl("ProductsRoute", null) %>">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%= GetRouteUrl("CartRoute", null) %>">Cart</a>
+                </li>
+                <asp:PlaceHolder runat="server" ID="adminLink" Visible="false">
+                            <li class="nav-item">
+                                <a class="nav-link" href="AdminDashboard.aspx">Dashboard</a>
+                            </li>
+                        </asp:PlaceHolder>
+            </ul>
+                   
+            <asp:LoginView runat="server">
+                <LoggedInTemplate>
+                    <asp:LoginName runat="server" FormatString="Welcome, {0}!" CssClass="text-white me-3"/>
+                    <asp:Button runat="server" Text="Logout" CssClass="btn btn-outline-light" OnClick="btnLogout_Click"/>
+                </LoggedInTemplate>
+                <AnonymousTemplate>
+                    <a href="<%= GetRouteUrl("LoginRoute", null) %>" class="btn btn-outline-light me-2">Login</a>
+                    <a href="<%= GetRouteUrl("RegisterRoute", null) %>" class="btn btn-outline-light">Register</a>
+                </AnonymousTemplate>
+            </asp:LoginView>
                 </div>
             </div>
         </nav>
-        <div class="container body-content">
+        <div class="container mt-4">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
-            </footer>
         </div>
+
+         <footer>
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <h5>HomeDecor Store</h5>
+                        <p>Bringing elegance to your home since 2023</p>
+                    </div>
+                    <div class="col-md-4 footer-links">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="Default.aspx">Home</a></li>
+                            <li><a href="Products.aspx">Products</a></li>
+                            <li><a href="Cart.aspx">Cart</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Contact Us</h5>
+                        <ul class="list-unstyled">
+                            <li>Email: info@homedecor.com</li>
+                            <li>Phone: (555) 123-4567</li>
+                            <li>Address: 123 Design Street, Decor City</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <p>&copy; 2023 HomeDecor Store. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>

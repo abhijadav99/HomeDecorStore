@@ -1,44 +1,44 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="HomeDecorStore._Default" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-    <main>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <h1 id="aspnetTitle">ASP.NET</h1>
-            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-            <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-        </section>
-
-        <div class="row">
-            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-                <h2 id="gettingStartedTitle">Getting started</h2>
-                <p>
-                    ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="librariesTitle">
-                <h2 id="librariesTitle">Get more libraries</h2>
-                <p>
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="hostingTitle">
-                <h2 id="hostingTitle">Web Hosting</h2>
-                <p>
-                    You can easily find a web hosting company that offers the right mix of features and price for your applications.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-                </p>
-            </section>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="display-4 mb-4">Transform Your Living Space</h1>
+            <p class="lead mb-4">Discover premium home decor items that elevate your home aesthetics</p>
+            <a href="Products.aspx" class="btn btn-primary btn-lg">Shop Now</a>
         </div>
-    </main>
+    </div>
 
+    <div class="container py-5">
+        <h2 class="text-center mb-5">Popular Categories</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card category-card h-100">
+                    <img src="Images/living-room.jpg" class="card-img-top" alt="Living Room">
+                    <div class="card-body">
+                        <h5 class="card-title">Living Room</h5>
+                        <p class="card-text">Modern furniture and accessories for your living space</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card category-card h-100">
+                    <img src="Images/bedroom.jpg" class="card-img-top" alt="Bedroom">
+                    <div class="card-body">
+                        <h5 class="card-title">Bedroom</h5>
+                        <p class="card-text">Create your perfect sleep sanctuary</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card category-card h-100">
+                    <img src="Images/kitchen.jpg" class="card-img-top" alt="Kitchen">
+                    <div class="card-body">
+                        <h5 class="card-title">Kitchen & Dining</h5>
+                        <p class="card-text">Stylish and functional kitchenware</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>

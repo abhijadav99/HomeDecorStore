@@ -1,0 +1,85 @@
+﻿:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #ecf0f1;
+    --accent-color: #e67e22;
+    --card-text-color: #212529;
+    --card-bg-color: #ffffff;
+}
+
+.navbar {
+    background-color: var(--primary-color) !important;
+    padding: 1rem 0;
+}
+
+.nav-link {
+    color: var(--secondary-color) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: var(--accent-color) !important;
+    }
+
+.btn-primary {
+    background-color: var(--accent-color);
+    border: none;
+    padding: 0.5rem 1.5rem;
+}
+
+    .btn-primary:hover {
+        background-color: #d35400;
+    }
+
+footer {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 2rem 0;
+    margin-top: auto;
+}
+
+.footer-links a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    .footer-links a:hover {
+        color: var(--accent-color);
+    }
+
+.hero-section {
+    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('../Images/hero-bg.jpg') center/cover;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.category-card {
+    transition: transform 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .category-card:hover {
+        transform: translateY(-5px);
+    }
+
+.nav-tabs .nav-link {
+    color: var(--primary-color) !important;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
+        color: #fff !important;
+        background-color: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+    }
+
+    .nav-tabs .nav-link:hover {
+        border-color: rgba(var(--primary-color), 0.2) !important;
+    }
