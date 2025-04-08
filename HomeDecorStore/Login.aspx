@@ -12,16 +12,16 @@
                         <label>Username</label>
                         <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" />
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="txtUsername"
-                            ErrorMessage="Required" CssClass="text-danger" Display="Dynamic"/>
+                            ErrorMessage="Please enter the correct User name" CssClass="text-danger" Display="Dynamic"/>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
                         <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" />
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="txtPassword"
-                            ErrorMessage="Required" CssClass="text-danger" Display="Dynamic"/>
+                            ErrorMessage="Please Enter correct password" CssClass="text-danger" Display="Dynamic"/>
                     </div>
                     <asp:Button ID="btnLogin" runat="server" Text="Login" 
-                        CssClass="btn btn-primary btn-block" OnClick="btnLogin_Click"/>
+                        CssClass="btn btn-primary btn-block mt-3" OnClick="btnLogin_Click"/>
                     <div class="text-center mt-3">
                         <a href="Register.aspx">Create new account</a>
                     </div>

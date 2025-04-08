@@ -38,7 +38,7 @@
                             ErrorMessage="Passwords don't match" CssClass="text-danger" Display="Dynamic"/>
                     </div>
                     <asp:Button ID="btnRegister" runat="server" Text="Register" 
-                        CssClass="btn btn-primary btn-block" OnClick="btnRegister_Click"/>
+                        CssClass="btn btn-primary btn-block mt-3" OnClick="btnRegister_Click"/>
                     <asp:Literal ID="ltMessage" runat="server" />
                 </div>
             </div>

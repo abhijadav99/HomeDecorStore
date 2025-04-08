@@ -21,7 +21,7 @@
             <ItemTemplate>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-                        <img src='<%# Eval("ImageURL") %>' class="card-img-top" alt='<%# Eval("Name") %>'/>
+                        <img src='<%# Eval("ImageURL") %>' class="card-img-top img-fluid object-fit-cover" style="height: 350px;" alt='<%# Eval("Name") %>'/>
                         <div class="card-body">
                             <h5 class="card-title"><%# Eval("Name") %></h5>
                             <p class="card-text"><%# Eval("Description") %></p>

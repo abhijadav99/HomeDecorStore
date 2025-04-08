@@ -5,12 +5,12 @@
     
     <div class="row g-3">
         <div class="col-md-6">
-            <h4>Shipping Information</h4>
-            <div class="form-group">
+            <h4 class="mb-3">Shipping Information</h4>
+            <div class="form-group mb-2">
                 <asp:TextBox ID="txtFullName" runat="server" placeholder="Full Name" 
                     CssClass="form-control" Required="true"/>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <asp:TextBox ID="txtAddress" runat="server" placeholder="Street Address" 
                     CssClass="form-control" Required="true" TextMode="MultiLine" Rows="2"/>
             </div>
