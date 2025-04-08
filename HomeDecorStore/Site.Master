@@ -61,7 +61,7 @@
                 </li>
                 <asp:PlaceHolder runat="server" ID="adminLink" Visible="false">
                             <li class="nav-item">
-                                <a class="nav-link" href="AdminDashboard.aspx">Dashboard</a>
+                                <a class="nav-link" href="AdminDashboard.aspx">Admin Dashboard</a>
                             </li>
                         </asp:PlaceHolder>
             </ul>
@@ -73,7 +73,8 @@
                 </LoggedInTemplate>
                 <AnonymousTemplate>
                     <a href="<%= GetRouteUrl("LoginRoute", null) %>" class="btn btn-outline-light me-2">Login</a>
-                    <a href="<%= GetRouteUrl("RegisterRoute", null) %>" class="btn btn-outline-light">Register</a>
+                    <a href="<%= GetRouteUrl("RegisterRoute", null) %>" class="btn btn-outline-light me-2">Register</a>
+                    <a href="<%= GetRouteUrl("AdminLoginRoute", null) %>" class="btn btn-outline-light">Admin Login</a>
                 </AnonymousTemplate>
             </asp:LoginView>
                 </div>
