@@ -1,33 +1,22 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminDashboard.aspx.cs" Inherits="HomeDecorStore.AdminDashboard" MasterPageFile="~/Site.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-        <asp:HiddenField ID="hdnActiveTab" runat="server" Value="#products" />
+        
 
     <div class="container-fluid">
-        <!-- Tabs Navigation -->
-        <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="products-tab" data-toggle="tab" href="#products" role="tab">Products</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab">Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab">Users</a>
-            </li>
-        </ul>
-
-        <!-- Tab Contents -->
-        <div class="tab-content">
-            <!-- Products Tab -->
-            <div class="tab-pane fade show active" id="products" role="tabpanel">
-                <h2 class="mb-4">Product Management</h2>
+       
+            <!-- Products CARD -->
+            <div class="card">
+                <div class="card-header mb-3"  style="background-color: var(--primary-color) !important; color: var(--secondary-color) !important;">
+                    <h4>Product Management</h4>
+                </div>
+               
                 
-                <asp:GridView ID="gvProducts" runat="server" 
-                    OnRowEditing="gvProducts_RowEditing"
-                    OnRowUpdating="gvProducts_RowUpdating"
-                    OnRowCancelingEdit="gvProducts_RowCancelingEdit" 
-                    OnRowDeleting="gvProducts_RowDeleting"
+                <asp:GridView ID="gridViewProducts" runat="server" 
+                    OnRowEditing="gridViewProductsRowEditing"
+                    OnRowUpdating="gridViewProductsRowUpdating"
+                    OnRowCancelingEdit="gridViewProductsRowCancelingEdit" 
+                    OnRowDeleting="gridViewProductsRowDeleting"
                     AutoGenerateColumns="false"
                     DataKeyNames="ProductID"
                     CssClass="table table-striped">
@@ -103,9 +92,12 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
                     ConnectionString="<%$ ConnectionStrings:HomeDecorDB %>"
                     SelectCommand="SELECT * FROM Categories"></asp:SqlDataSource>
-
-                <h3 class="mt-5">Add New Product</h3>
-                <div class="row g-3">
+                </div>
+        <div class="card">
+            <div class="card-header mb-3"  style="background-color: var(--primary-color) !important; color: var(--secondary-color) !important;">
+                <h4>Add New Product</h4>
+            </div>
+                <div class="row g-3 m-2">
                     <div class="col-md-4">
                         <asp:TextBox ID="txtName" runat="server" placeholder="Product Name" CssClass="form-control"/>
                     </div>
@@ -139,16 +131,18 @@
                  </div>
             </div>
             <!-- Orders Tab -->
-            <div class="tab-pane fade" id="orders" role="tabpanel">
-                <h2 class="mb-4">Order Management</h2>
+             <div class="card">
+                 <div class="card-header mb-3"  style="background-color: var(--primary-color) !important; color: var(--secondary-color) !important;">
+                        <h4>Order Management</h4>
+                    </div>
                 
                 <!-- Order GridView -->
-                <asp:GridView ID="gvOrders" runat="server" 
+                <asp:GridView ID="gridViewOrders" runat="server" 
                     AutoGenerateColumns="false"
                     DataKeyNames="OrderID"
-                    OnRowEditing="gvOrders_RowEditing"
-                    OnRowUpdating="gvOrders_RowUpdating"
-                    OnRowCancelingEdit="gvOrders_RowCancelingEdit"
+                    OnRowEditing="gridViewOrdersRowEditing"
+                    OnRowUpdating="gridViewOrdersRowUpdating"
+                    OnRowCancelingEdit="gridViewOrdersRowCancelingEdit"
                     CssClass="table table-striped">
                     <Columns>
                             <asp:TemplateField>
@@ -195,15 +189,18 @@
             </div>
 
             <!-- Users Tab -->
-            <div class="tab-pane fade" id="users" role="tabpanel">
-                <h2 class="mb-4">User Management</h2>
-                   <asp:GridView ID="gvUsers" runat="server"
+             <div class="card">
+                 <div class="card-header  mb-2"  style="background-color: var(--primary-color) !important; color: var(--secondary-color) !important;">
+                       <h4>User Management</h4>
+                   </div>
+                
+                   <asp:GridView ID="gridViewUsers" runat="server"
                     AutoGenerateColumns="false"
                     DataKeyNames="UserID"
-                    OnRowEditing="gvUsers_RowEditing"
-                    OnRowUpdating="gvUsers_RowUpdating"
-                    OnRowCancelingEdit="gvUsers_RowCancelingEdit"
-                    OnRowDeleting="gvUsers_RowDeleting"
+                    OnRowEditing="gridViewUsers_RowEditing"
+                    OnRowUpdating="gridViewUsers_RowUpdating"
+                    OnRowCancelingEdit="gridViewUsers_RowCancelingEdit"
+                    OnRowDeleting="gridViewUsers_RowDeleting"
                     CssClass="table table-striped">
                     <Columns>
                         <asp:TemplateField>
@@ -258,9 +255,12 @@
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
-
-                <h3 class="mt-5">Add New User</h3>
-                    <div class="row g-3">
+                 </div>
+                 <div class="card">
+                     <div class="card-header  mb-2"  style="background-color: var(--primary-color) !important; color: var(--secondary-color) !important;">
+                          <h4>Add New User</h4>
+                      </div>
+                    <div class="row g-3 m-2">
                         <div class="col-md-4">
                             <asp:TextBox ID="txtNewUsername" runat="server" placeholder="Username" 
                                 CssClass="form-control"/>
@@ -305,24 +305,6 @@
                     </div>
             </div>
         </div>
-</div>
-    <!-- Required Scripts -->
-     <!-- Add this script after existing scripts -->
-    <script type="text/javascript">
-        $(function () {
-            // Restore active tab from hidden field
-            var activeTab = $('#<%= hdnActiveTab.ClientID %>').val();
-            if (activeTab) {
-                $('#adminTabs a[href="' + activeTab + '"]').tab('show');
-            }
 
-            // Update hidden field when tab changes
-            $('#adminTabs a').on('shown.bs.tab', function (e) {
-                $('#<%= hdnActiveTab.ClientID %>').val($(e.target).attr('href'));
-            });
-        });
-    </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </asp:Content>

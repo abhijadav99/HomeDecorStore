@@ -17,64 +17,70 @@ namespace HomeDecorStore
         {
             if (!IsPostBack)
             {
-                // Existing auth check
                 if (!IsAdmin())
                 {
                     Response.Redirect(GetRouteUrl("AdminLoginRoute", null));
                     return;
                 }
 
-                // Initialize hidden field with first tab
-                hdnActiveTab.Value = "#products";
                 BindData();
             }
             else
             {
-                // After postback, preserve the scroll position
                 MaintainScrollPositionOnPostBack = true;
             }
         }
 
         private void BindData()
         {
-            BindProducts();
-            BindOrders();
-            BindUsers();
+            ProductsBinding();
+            OrdersBinding();
+            UsersBinding();
         }
 
-        private bool IsAdmin() => Session["UserRole"]?.ToString() == "Admin";
-
-        private void BindProducts()
+        private bool IsAdmin()
         {
-            string query = @"SELECT p.*, c.CategoryName 
-                   FROM Products p 
-                   INNER JOIN Categories c ON p.CategoryID = c.CategoryID";
+            return Session["UserRole"]?.ToString() == "Admin";
+        }
+
+        private void ProductsBinding()
+        {
+            const string query = @"
+        SELECT p.*, c.CategoryName 
+        FROM Products p 
+        INNER JOIN Categories c ON p.CategoryID = c.CategoryID";
+
             DataTable dt = Database.GetDataParameters(query, new SqlParameter[0]);
-            gvProducts.DataSource = dt;
-            gvProducts.DataBind();
+            gridViewProducts.DataSource = dt;
+            gridViewProducts.DataBind();
         }
 
-        protected void gvProducts_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void gridViewProductsRowEditing(object sender, GridViewEditEventArgs e)
         {
-            gvProducts.EditIndex = e.NewEditIndex;
-            BindProducts();
+            gridViewProducts.EditIndex = e.NewEditIndex;
+            ProductsBinding();
         }
 
-        protected void gvProducts_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void gridViewProductsRowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            gvProducts.EditIndex = -1;
-            BindProducts();
+            gridViewProducts.EditIndex = -1;
+            ProductsBinding();
         }
 
-        protected void gvProducts_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void gridViewProductsRowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
             {
-                int productId = Convert.ToInt32(gvProducts.DataKeys[e.RowIndex].Value);
-                string query = "DELETE FROM Products WHERE ProductID = @ProductID";
-                SqlParameter[] parameters = { new SqlParameter("@ProductID", productId) };
+                int productId = Convert.ToInt32(gridViewProducts.DataKeys[e.RowIndex].Value);
+
+                const string query = "DELETE FROM Products WHERE ProductID = @ProductID";
+                var parameters = new[]
+                {
+            new SqlParameter("@ProductID", productId)
+        };
+
                 Database.ExecuteQueryParameters(query, parameters);
-                BindProducts();
+                ProductsBinding();
             }
             catch (Exception ex)
             {
@@ -82,12 +88,13 @@ namespace HomeDecorStore
             }
         }
 
-        protected void gvProducts_RowUpdating(object sender, GridViewUpdateEventArgs e)
+
+        protected void gridViewProductsRowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
             {
-                int productId = Convert.ToInt32(gvProducts.DataKeys[e.RowIndex].Value);
-                GridViewRow row = gvProducts.Rows[e.RowIndex];
+                int productId = Convert.ToInt32(gridViewProducts.DataKeys[e.RowIndex].Value);
+                GridViewRow row = gridViewProducts.Rows[e.RowIndex];
 
                 // Get controls
                 DropDownList ddlCategories = (DropDownList)row.FindControl("ddlCategories");
@@ -96,15 +103,17 @@ namespace HomeDecorStore
                 TextBox txtPrice = (TextBox)row.FindControl("txtPrice");
                 TextBox txtImageURL = (TextBox)row.FindControl("txtImageURL");
 
-                string query = @"UPDATE Products SET 
-                       Name = @Name,
-                       Description = @Description,
-                       Price = @Price,
-                       CategoryID = @CategoryID,
-                       ImageURL = @ImageURL
-                       WHERE ProductID = @ProductID";
+                const string query = @"
+            UPDATE Products SET 
+                Name = @Name,
+                Description = @Description,
+                Price = @Price,
+                CategoryID = @CategoryID,
+                ImageURL = @ImageURL
+            WHERE ProductID = @ProductID";
 
-                SqlParameter[] parameters = {
+                var parameters = new[]
+                {
             new SqlParameter("@Name", txtName.Text),
             new SqlParameter("@Description", txtDescription.Text),
             new SqlParameter("@Price", Convert.ToDecimal(txtPrice.Text)),
@@ -114,8 +123,8 @@ namespace HomeDecorStore
         };
 
                 Database.ExecuteQueryParameters(query, parameters);
-                gvProducts.EditIndex = -1;
-                BindProducts();
+                gridViewProducts.EditIndex = -1;
+                ProductsBinding();
             }
             catch (Exception ex)
             {
@@ -123,16 +132,18 @@ namespace HomeDecorStore
             }
         }
 
-        // Update Add Product method
         protected void btnAddProduct_Click(object sender, EventArgs e)
         {
             try
             {
-                string query = @"INSERT INTO Products 
-                       (Name, Description, Price, CategoryID, ImageURL)
-                       VALUES (@Name, @Description, @Price, @CategoryID, @ImageURL)";
+                const string query = @"
+            INSERT INTO Products 
+                (Name, Description, Price, CategoryID, ImageURL)
+            VALUES 
+                (@Name, @Description, @Price, @CategoryID, @ImageURL)";
 
-                SqlParameter[] parameters = {
+                var parameters = new[]
+                {
             new SqlParameter("@Name", txtName.Text.Trim()),
             new SqlParameter("@Description", txtDescription.Text.Trim()),
             new SqlParameter("@Price", Convert.ToDecimal(txtPrice.Text)),
@@ -142,7 +153,7 @@ namespace HomeDecorStore
 
                 Database.ExecuteQueryParameters(query, parameters);
                 ClearProductForm();
-                BindProducts();
+                ProductsBinding();
             }
             catch (Exception ex)
             {
@@ -150,7 +161,6 @@ namespace HomeDecorStore
             }
         }
 
-        // Update ClearProductForm method
         private void ClearProductForm()
         {
             txtName.Text = string.Empty;
@@ -160,46 +170,52 @@ namespace HomeDecorStore
             ddlCategory.SelectedIndex = 0;
         }
 
-        private void BindOrders()
+        private void OrdersBinding()
         {
-            string query = @"SELECT o.*, u.Username 
-                          FROM Orders o
-                          INNER JOIN Users u ON o.UserID = u.UserID
-                          ORDER BY o.OrderDate DESC";
+            const string query = @"
+        SELECT o.*, u.Username 
+        FROM Orders o
+        INNER JOIN Users u ON o.UserID = u.UserID
+        ORDER BY o.OrderDate DESC";
 
             DataTable dt = Database.GetDataParameters(query, new SqlParameter[0]);
-            gvOrders.DataSource = dt;
-            gvOrders.DataBind();
+            gridViewOrders.DataSource = dt;
+            gridViewOrders.DataBind();
         }
 
-        protected void gvOrders_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void gridViewOrdersRowEditing(object sender, GridViewEditEventArgs e)
         {
-            gvOrders.EditIndex = e.NewEditIndex;
-            BindOrders();
+            gridViewOrders.EditIndex = e.NewEditIndex;
+            OrdersBinding();
         }
 
-        protected void gvOrders_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void gridViewOrdersRowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            gvOrders.EditIndex = -1;
-            BindOrders();
+            gridViewOrders.EditIndex = -1;
+            OrdersBinding();
         }
 
-        protected void gvOrders_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void gridViewOrdersRowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
             {
-                int orderId = Convert.ToInt32(gvOrders.DataKeys[e.RowIndex].Value);
-                DropDownList ddlStatus = (DropDownList)gvOrders.Rows[e.RowIndex].FindControl("ddlStatus");
+                int orderId = Convert.ToInt32(gridViewOrders.DataKeys[e.RowIndex].Value);
+                DropDownList ddlStatus = (DropDownList)gridViewOrders.Rows[e.RowIndex].FindControl("ddlStatus");
 
-                string query = "UPDATE Orders SET OrderStatus = @Status WHERE OrderID = @OrderID";
-                SqlParameter[] parameters = {
-                    new SqlParameter("@Status", ddlStatus.SelectedValue),
-                    new SqlParameter("@OrderID", orderId)
-                };
+                const string query = @"
+            UPDATE Orders 
+            SET OrderStatus = @Status 
+            WHERE OrderID = @OrderID";
+
+                var parameters = new[]
+                {
+            new SqlParameter("@Status", ddlStatus.SelectedValue),
+            new SqlParameter("@OrderID", orderId)
+        };
 
                 Database.ExecuteQueryParameters(query, parameters);
-                gvOrders.EditIndex = -1;
-                BindOrders();
+                gridViewOrders.EditIndex = -1;
+                OrdersBinding();
             }
             catch (Exception ex)
             {
@@ -207,52 +223,57 @@ namespace HomeDecorStore
             }
         }
 
-
         private void ShowError(string message)
         {
-            ClientScript.RegisterStartupScript(GetType(), "alert",
-                $"alert('{message.Replace("'", @"\'")}');", true);
+            ClientScript.RegisterStartupScript(
+                GetType(),
+                "alert",
+                $"alert('{message.Replace("'", @"\'")}');",
+                true
+            );
         }
 
 
-        private void BindUsers()
+        private void UsersBinding()
         {
-            string query = "SELECT UserID, Username, Email, Role FROM Users";
+            const string query = "SELECT UserID, Username, Email, Role FROM Users";
             DataTable dt = Database.GetDataParameters(query, new SqlParameter[0]);
-            gvUsers.DataSource = dt;
-            gvUsers.DataBind();
+            gridViewUsers.DataSource = dt;
+            gridViewUsers.DataBind();
         }
 
-        protected void gvUsers_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void gridViewUsers_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            gvUsers.EditIndex = e.NewEditIndex;
-            BindUsers();
+            gridViewUsers.EditIndex = e.NewEditIndex;
+            UsersBinding();
         }
 
-        protected void gvUsers_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void gridViewUsers_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            gvUsers.EditIndex = -1;
-            BindUsers();
+            gridViewUsers.EditIndex = -1;
+            UsersBinding();
         }
 
-        protected void gvUsers_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        protected void gridViewUsers_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
             {
-                int userId = Convert.ToInt32(gvUsers.DataKeys[e.RowIndex].Value);
-                GridViewRow row = gvUsers.Rows[e.RowIndex];
+                int userId = Convert.ToInt32(gridViewUsers.DataKeys[e.RowIndex].Value);
+                GridViewRow row = gridViewUsers.Rows[e.RowIndex];
 
                 TextBox txtUsername = (TextBox)row.FindControl("txtUsername");
                 TextBox txtEmail = (TextBox)row.FindControl("txtEmail");
                 DropDownList ddlRoles = (DropDownList)row.FindControl("ddlRoles");
 
-                string query = @"UPDATE Users SET 
-                       Username = @Username,
-                       Email = @Email,
-                       Role = @Role
-                       WHERE UserID = @UserID";
+                const string query = @"
+            UPDATE Users 
+            SET Username = @Username,
+                Email = @Email,
+                Role = @Role
+            WHERE UserID = @UserID";
 
-                SqlParameter[] parameters = {
+                var parameters = new[]
+                {
             new SqlParameter("@Username", txtUsername.Text),
             new SqlParameter("@Email", txtEmail.Text),
             new SqlParameter("@Role", ddlRoles.SelectedValue),
@@ -260,8 +281,8 @@ namespace HomeDecorStore
         };
 
                 Database.ExecuteQueryParameters(query, parameters);
-                gvUsers.EditIndex = -1;
-                BindUsers();
+                gridViewUsers.EditIndex = -1;
+                UsersBinding();
             }
             catch (Exception ex)
             {
@@ -269,41 +290,43 @@ namespace HomeDecorStore
             }
         }
 
-        protected void gvUsers_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void gridViewUsers_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
             {
-                int userId = Convert.ToInt32(gvUsers.DataKeys[e.RowIndex].Value);
-                string query = "DELETE FROM Users WHERE UserID = @UserID";
-                SqlParameter[] parameters = { new SqlParameter("@UserID", userId) };
+                int userId = Convert.ToInt32(gridViewUsers.DataKeys[e.RowIndex].Value);
+
+                const string query = "DELETE FROM Users WHERE UserID = @UserID";
+                var parameters = new[] { new SqlParameter("@UserID", userId) };
+
                 Database.ExecuteQueryParameters(query, parameters);
-                BindUsers();
+                UsersBinding();
             }
             catch (Exception ex)
             {
                 ShowError($"Delete failed: {ex.Message}");
             }
         }
-        // Remove the HashPassword method completely
 
         protected void btnAddUser_Click(object sender, EventArgs e)
         {
             try
             {
-                string query = @"INSERT INTO Users 
-            (Username, Password, Email, Role)
+                const string query = @"
+            INSERT INTO Users (Username, Password, Email, Role)
             VALUES (@Username, @Password, @Email, @Role)";
 
-                SqlParameter[] parameters = {
+                var parameters = new[]
+                {
             new SqlParameter("@Username", txtNewUsername.Text.Trim()),
-            new SqlParameter("@Password", txtNewPassword.Text), // Store plain text
+            new SqlParameter("@Password", txtNewPassword.Text), // Plain text as instructed
             new SqlParameter("@Email", txtNewEmail.Text.Trim()),
             new SqlParameter("@Role", ddlNewRole.SelectedValue)
         };
 
                 Database.ExecuteQueryParameters(query, parameters);
                 ClearUserForm();
-                BindUsers();
+                UsersBinding();
             }
             catch (Exception ex)
             {
@@ -316,7 +339,8 @@ namespace HomeDecorStore
             txtNewUsername.Text = string.Empty;
             txtNewEmail.Text = string.Empty;
             txtNewPassword.Text = string.Empty;
-            ddlNewRole.SelectedValue = "User"; // Reset to default
+            ddlNewRole.SelectedValue = "User"; // Reset to default role
         }
+
     }
 }

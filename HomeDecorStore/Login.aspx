@@ -4,7 +4,7 @@
     <div class="row justify-content-center mt-5">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header text-white"  style="background-color: var(--primary-color) !important;">
                     <h4>User Login</h4>
                 </div>
                 <div class="card-body">

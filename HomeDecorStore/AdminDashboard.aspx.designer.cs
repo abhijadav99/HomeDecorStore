@@ -15,22 +15,13 @@ namespace HomeDecorStore
     {
 
         /// <summary>
-        /// hdnActiveTab control.
+        /// gridViewProducts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnActiveTab;
-
-        /// <summary>
-        /// gvProducts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvProducts;
+        protected global::System.Web.UI.WebControls.GridView gridViewProducts;
 
         /// <summary>
         /// SqlDataSource1 control.
@@ -96,22 +87,22 @@ namespace HomeDecorStore
         protected global::System.Web.UI.WebControls.Button btnAddProduct;
 
         /// <summary>
-        /// gvOrders control.
+        /// gridViewOrders control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvOrders;
+        protected global::System.Web.UI.WebControls.GridView gridViewOrders;
 
         /// <summary>
-        /// gvUsers control.
+        /// gridViewUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvUsers;
+        protected global::System.Web.UI.WebControls.GridView gridViewUsers;
 
         /// <summary>
         /// txtNewUsername control.
